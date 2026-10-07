@@ -44,3 +44,5 @@ data/processed/*
 
 # Allow project images stored in img/ to be committed (override global image ignore above)
 !img/*.png
+# Local Python environment
+.venv/

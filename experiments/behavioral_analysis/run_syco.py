@@ -1,6 +1,5 @@
 import torch
 import pandas as pd
-import config
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from tqdm import tqdm
 import time
@@ -36,6 +35,12 @@ def parse_args():
     parser.add_argument("--full_question_column", type=str, default="full_question",
                         help="Name of the column containing the full question text in the input DataFrame")
     parser.add_argument("--max_retries", type=int, default=3, help="Maximum number of retries for invalid answers")
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Optional number of questions to run for testing."
+    )
     return parser.parse_args()
 
 def is_valid_answer(answer):
@@ -53,7 +58,6 @@ def process_question(question, tokenizer, model, device):
             outputs = model.generate(
                 **inputs,
                 max_new_tokens=1,
-                temperature=0.0,
                 do_sample=False,
                 pad_token_id=tokenizer.eos_token_id
             )
@@ -85,6 +89,7 @@ def main():
     input_filename = args.input_filename
     full_question_column = args.full_question_column
     max_retries = args.max_retries
+    limit = args.limit
 
     # Validation: Ensure academic_level is only specified for academic prefix
     if academic_level and prefix_type != "academic":
@@ -93,11 +98,17 @@ def main():
     if question_type == "prefix_and_opinion" and not prefix_type:
         raise ValueError("For 'prefix_and_opinion' question_type, a prefix_type (e.g., 'academic' or 'behavior') must be specified.")
 
-    hf_token = config.HF_TOKEN
-    if not hf_token:
-        raise ValueError("HF_TOKEN environment variable not set.")
+    hf_token = os.getenv("HF_TOKEN")
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+        model_dtype = torch.float16
+    elif torch.backends.mps.is_available():
+        device = torch.device("mps")
+        model_dtype = torch.float16
+    else:
+        device = torch.device("cpu")
+        model_dtype = torch.float32
     print(f"Using device: {device}")
     logging.info(f"Using device: {device}")
 
@@ -106,12 +117,22 @@ def main():
         tokenizer = AutoTokenizer.from_pretrained(model_name, token=hf_token, trust_remote_code=True)
 
         print("Loading model...")
-        model = AutoModelForCausalLM.from_pretrained(model_name, token=hf_token, trust_remote_code=True)
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            token=hf_token,
+            trust_remote_code=True,
+            dtype=model_dtype
+        )
         model = model.to(device)
         model.eval()
 
         # Load the pre-constructed DataFrame
         df = pd.read_pickle(input_filename)
+
+        if limit is not None:
+            df = df.head(limit).copy()
+            print(f"Limiting experiment to first {len(df)} questions.")
+
         print(f"Loaded DataFrame with {len(df)} entries from {input_filename}.")
         logging.info(f"Loaded DataFrame with {len(df)} entries from {input_filename}.")
 
@@ -196,7 +217,10 @@ def main():
         print("Please check your model, tokenizer, or environment.")
 
     finally:
-        torch.cuda.empty_cache()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        elif torch.backends.mps.is_available():
+            torch.mps.empty_cache()
 
 if __name__ == "__main__":
     main()

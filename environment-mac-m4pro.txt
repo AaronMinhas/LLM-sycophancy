@@ -1,0 +1,25 @@
+Experiment machine
+==================
+
+Date: 2026-10-07
+
+Hardware:
+      Chip: Apple M4 Pro
+      Memory: 24 GB
+
+macOS:
+ProductName:		macOS
+ProductVersion:		26.6.2
+BuildVersion:		25G83
+
+Python:
+Python 3.14.5
+
+PyTorch / Transformers:
+PyTorch: 2.14.1
+Transformers: 5.19.0
+Datasets: 5.1.0
+MPS available: True
+
+Original repository commit:
+8d8bf4c8d57e111181bcbc5d83b65da264dde753
