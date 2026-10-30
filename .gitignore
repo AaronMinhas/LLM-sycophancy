@@ -46,3 +46,6 @@ data/processed/*
 !img/*.png
 # Local Python environment
 .venv/
+
+# macOS
+.DS_Store

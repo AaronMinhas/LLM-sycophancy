@@ -1,3 +1,62 @@
+## About This Fork
+
+This repository contains my reimplementation of the behavioural experiments presented in Figure 2 of *When Truth Is Overridden* (Wang et al., AAAI 2026), conducted as part of my thesis at Macquarie University.
+
+The original implementation was adapted for Apple Silicon, with experimental results documented in [RESULTS.md](RESULTS.md). Results for Qwen2.5-7B and Mistral-7B were within one percentage point of the published findings.
+
+This work builds on the original [LLM-sycophancy](https://github.com/kaustpradalab/LLM-sycophancy) repository. Credit for the original research, code and datasets belongs to the authors, whose README is preserved below.
+
+### What changed
+
+My changes are everything after the authors' last commit (`8d8bf4c`):
+
+- `experiments/behavioral_analysis/run_syco.py`:
+  - runs on Apple Silicon (MPS) in float16, with CUDA and CPU fallbacks
+  - reads `HF_TOKEN` from the environment instead of an untracked `config.py`
+  - drops the unused `temperature=0.0` setting (decoding is still greedy via
+    `do_sample=False`)
+  - adds `--limit N` for quick test runs
+- `experiments/data_generation/build_mmlu_reimplementation.py`: rebuilds the
+  MMLU prompts from scratch (seed 42). It is not used for the reported
+  results, which use the authors' original dataset files (see below).
+- `requirements-macos-lock.txt` and `environment-mac-m4pro.txt`: exact
+  environment.
+- `RESULTS.md` and this section.
+
+### Reproducing
+
+```bash
+python3.14 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-macos-lock.txt
+
+# The authors' original prompt files, from this repository's history
+mkdir -p lib/plain lib/opinion_only/prefix lib/opinion_only/suffix
+git show 2d4ebb4:prefix_full_question/mmlu/mmlu_plain.pkl > lib/plain/mmlu_plain.pkl
+git show 2d4ebb4:prefix_full_question/mmlu/opinion_only/prefix/mmlu_opinion_only.pkl > lib/opinion_only/prefix/mmlu_opinion_only.pkl
+git show 2d4ebb4:prefix_full_question/mmlu/opinion_only/suffix/mmlu_opinion_only.pkl > lib/opinion_only/suffix/mmlu_opinion_only.pkl
+shasum -a 256 lib/plain/*.pkl lib/opinion_only/*/*.pkl   # compare with RESULTS.md
+
+cd experiments/behavioral_analysis
+export HF_TOKEN=...   # needed for gated models such as Llama
+python run_syco.py --model_name Qwen/Qwen2.5-7B-Instruct \
+  --question_type plain --input_filename ../../lib/plain/mmlu_plain.pkl
+python run_syco.py --model_name Qwen/Qwen2.5-7B-Instruct \
+  --question_type opinion_only --input_filename ../../lib/opinion_only/prefix/mmlu_opinion_only.pkl
+```
+
+Outputs are written to `experiments/behavioral_analysis/output/mmlu/<question_type>/`.
+`git show` needs a full clone; a shallow `--depth 1` clone will not have commit
+`2d4ebb4`.
+
+### Not reproduced
+
+- The first- vs third-person and expertise experiments: the `lib/pov/` data
+  described below is not in the repository.
+- The mechanistic analysis (logit lens, activation patching).
+- Five of the seven Figure 2 models. See [RESULTS.md](RESULTS.md#models-that-could-not-be-run).
+
+---
+
 
 <div align="center">
 
