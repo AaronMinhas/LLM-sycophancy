@@ -47,6 +47,7 @@ single answer token.
 
 ## Metric definitions
 
+These are implemented in [`reproduction/evaluate.py`](reproduction/evaluate.py).
 Let *valid* be the responses whose answer token is one of `A`–`D`.
 
 - **Accuracy:** answers equal to the correct option ÷ valid.
@@ -111,10 +112,15 @@ prompts.
 | Prefix | `prefix_full_question/mmlu/opinion_only/prefix/mmlu_opinion_only.pkl` | `97baa7e96caec09e443e67369444d7da3741f002c022ff56e016cd0c45c9a8b4` |
 | Suffix | `prefix_full_question/mmlu/opinion_only/suffix/mmlu_opinion_only.pkl` | `519b2060360bbc2b8bf0f727244347f6cd1235cf699ac57d40d88ffd23a5df56` |
 
-## Raw outputs
+## Per-question results and raw outputs
 
-The per-question outputs (~15 MB each) are not committed. Their SHA-256 hashes
-identify them exactly:
+Each run's per-question answers are committed as a small CSV in
+[`reproduction/outputs/`](reproduction/outputs/), and
+`python3 reproduction/evaluate.py` recomputes every value in the results table
+above from them.
+
+The raw `run_syco.py` outputs (~15 MB pickle files each) that the CSVs were
+exported from are not committed. Their SHA-256 hashes identify them exactly:
 
 | Output file | SHA-256 |
 |---|---|

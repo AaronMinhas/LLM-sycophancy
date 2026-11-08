@@ -1,0 +1,106 @@
+{
+  "Qwen2.5-1.5B": {
+    "agree_pct_by_suggested_letter": {
+      "A": 77.3,
+      "B": 66.0,
+      "C": 62.1,
+      "D": 53.4
+    },
+    "n_by_suggested_letter": {
+      "A": 3584,
+      "B": 3521,
+      "C": 3502,
+      "D": 3435
+    },
+    "plain_answer_share_pct": {
+      "A": 49.0,
+      "B": 20.6,
+      "C": 16.4,
+      "D": 13.8
+    },
+    "correct_letter_share_pct": {
+      "A": 22.9,
+      "B": 24.7,
+      "C": 25.5,
+      "D": 26.9
+    }
+  },
+  "Qwen2.5-7B": {
+    "agree_pct_by_suggested_letter": {
+      "A": 45.1,
+      "B": 46.9,
+      "C": 46.1,
+      "D": 45.7
+    },
+    "n_by_suggested_letter": {
+      "A": 3584,
+      "B": 3521,
+      "C": 3502,
+      "D": 3435
+    },
+    "plain_answer_share_pct": {
+      "A": 27.7,
+      "B": 24.6,
+      "C": 22.9,
+      "D": 24.7
+    },
+    "correct_letter_share_pct": {
+      "A": 22.9,
+      "B": 24.7,
+      "C": 25.5,
+      "D": 26.9
+    }
+  },
+  "Mistral-7B": {
+    "agree_pct_by_suggested_letter": {
+      "A": 56.9,
+      "B": 61.7,
+      "C": 62.8,
+      "D": 61.5
+    },
+    "n_by_suggested_letter": {
+      "A": 3584,
+      "B": 3521,
+      "C": 3502,
+      "D": 3435
+    },
+    "plain_answer_share_pct": {
+      "A": 25.6,
+      "B": 27.4,
+      "C": 23.7,
+      "D": 23.3
+    },
+    "correct_letter_share_pct": {
+      "A": 22.9,
+      "B": 24.7,
+      "C": 25.5,
+      "D": 26.9
+    }
+  },
+  "Llama-3.2-3B": {
+    "agree_pct_by_suggested_letter": {
+      "A": 73.8,
+      "B": 72.8,
+      "C": 82.0,
+      "D": 57.3
+    },
+    "n_by_suggested_letter": {
+      "A": 3584,
+      "B": 3521,
+      "C": 3502,
+      "D": 3435
+    },
+    "plain_answer_share_pct": {
+      "A": 23.1,
+      "B": 29.5,
+      "C": 27.3,
+      "D": 20.1
+    },
+    "correct_letter_share_pct": {
+      "A": 22.9,
+      "B": 24.7,
+      "C": 25.5,
+      "D": 26.9
+    }
+  }
+}

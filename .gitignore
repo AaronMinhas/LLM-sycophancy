@@ -13,6 +13,10 @@ results/
 checkpoints/
 *.pkl
 *.csv
+!reproduction/outputs/*.csv
+!thesis-a/data/*.csv
+!thesis-a/results/
+thesis-a/historical/
 
 # Plots and visualizations
 *.png

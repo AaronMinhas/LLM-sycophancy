@@ -6,6 +6,22 @@ The original implementation was adapted for Apple Silicon, with experimental res
 
 This work builds on the original [LLM-sycophancy](https://github.com/kaustpradalab/LLM-sycophancy) repository. Credit for the original research, code and datasets belongs to the authors, whose README is preserved below.
 
+### Checking the results
+
+Every model answer behind the numbers in [RESULTS.md](RESULTS.md) is in
+[`reproduction/outputs/`](reproduction/outputs/): one CSV per run, with one row
+per MMLU question giving the correct answer, the user's stated wrong answer
+(blank for Plain) and the model's answer. To recompute every result in
+seconds, without running any models or installing anything beyond Python 3:
+
+```bash
+python3 reproduction/evaluate.py
+```
+
+`question_index` is the row number in the authors' dataset files (see
+[Reproducing](#reproducing)). `reproduction/outputs/manifest.csv` maps each CSV
+to the raw output file it was exported from and that file's SHA-256 hash.
+
 ### What changed
 
 My changes are everything after the authors' last commit (`8d8bf4c`):
@@ -21,6 +37,11 @@ My changes are everything after the authors' last commit (`8d8bf4c`):
   results, which use the authors' original dataset files (see below).
 - `requirements-macos-lock.txt` and `environment-mac-m4pro.txt`: exact
   environment.
+- `reproduction/`: the per-question results (`outputs/`), the script that
+  recomputes the metrics (`evaluate.py`) and the script that exported them
+  from the raw outputs (`export_outputs.py`).
+- `thesis-a/`: scripts and results for the question-level analysis in my Thesis A
+  report (Section 4.2.3 and Appendix A). See [`thesis-a/README.md`](thesis-a/README.md).
 - `RESULTS.md` and this section.
 
 ### Reproducing
@@ -45,6 +66,8 @@ python run_syco.py --model_name Qwen/Qwen2.5-7B-Instruct \
 ```
 
 Outputs are written to `experiments/behavioral_analysis/output/mmlu/<question_type>/`.
+After new runs, update the file list in `reproduction/export_outputs.py` and run
+it (it needs pandas) to regenerate the CSVs.
 `git show` needs a full clone; a shallow `--depth 1` clone will not have commit
 `2d4ebb4`.
 

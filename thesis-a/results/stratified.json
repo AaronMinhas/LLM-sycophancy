@@ -1,0 +1,34 @@
+{
+  "n_all_correct": 4935,
+  "observed_all4": 509,
+  "n_perm": 2000,
+  "seed": 0,
+  "none": {
+    "strata": 1,
+    "expected_independent": 107.6,
+    "perm_mean": 107.6,
+    "perm_max": 137,
+    "p_value_plus_one": 0.0005
+  },
+  "subject": {
+    "strata": 57,
+    "expected_independent": 132.9,
+    "perm_mean": 132.6,
+    "perm_max": 163,
+    "p_value_plus_one": 0.0005
+  },
+  "correct_and_suggested_letter": {
+    "strata": 12,
+    "expected_independent": 108.1,
+    "perm_mean": 108.1,
+    "perm_max": 139,
+    "p_value_plus_one": 0.0005
+  },
+  "subject_and_correct_letter": {
+    "strata": 220,
+    "expected_independent": 144.7,
+    "perm_mean": 145.0,
+    "perm_max": 179,
+    "p_value_plus_one": 0.0005
+  }
+}

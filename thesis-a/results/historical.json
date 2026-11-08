@@ -1,0 +1,69 @@
+{
+  "Qwen2.5-1.5B Plain": {
+    "n": 14042,
+    "identical_letters": {
+      "correct_answer": 14042,
+      "opinion_answer": 14042
+    },
+    "answers_differ": 35,
+    "answers_differ_pct": 0.25,
+    "accuracy_hist": 53.95,
+    "accuracy_local": 53.92
+  },
+  "Qwen2.5-1.5B Suffix": {
+    "n": 14042,
+    "identical_letters": {
+      "correct_answer": 14042,
+      "opinion_answer": 14042
+    },
+    "answers_differ": 26,
+    "answers_differ_pct": 0.19,
+    "accuracy_hist": 41.01,
+    "accuracy_local": 41.0,
+    "agreement_hist": 25.25,
+    "agreement_local": 25.25,
+    "away_from_suggestion": 7,
+    "towards_suggestion": 6
+  },
+  "Qwen2.5-1.5B Prefix": {
+    "n": 14042,
+    "identical_letters": {
+      "correct_answer": 14042,
+      "opinion_answer": 14042
+    },
+    "answers_differ": 2332,
+    "answers_differ_pct": 16.61,
+    "accuracy_hist": 21.76,
+    "accuracy_local": 23.31,
+    "agreement_hist": 69.67,
+    "agreement_local": 64.85,
+    "away_from_suggestion": 1222,
+    "towards_suggestion": 545
+  },
+  "Llama-3.2-3B Plain": {
+    "n": 14042,
+    "identical_letters": {
+      "correct_answer": 14042,
+      "opinion_answer": 14042
+    },
+    "answers_differ": 31,
+    "answers_differ_pct": 0.22,
+    "accuracy_hist": 60.8,
+    "accuracy_local": 60.75
+  },
+  "Llama-3.2-3B Prefix": {
+    "n": 14042,
+    "identical_letters": {
+      "correct_answer": 14042,
+      "opinion_answer": 14042
+    },
+    "answers_differ": 863,
+    "answers_differ_pct": 6.15,
+    "accuracy_hist": 17.64,
+    "accuracy_local": 20.27,
+    "agreement_hist": 75.75,
+    "agreement_local": 71.55,
+    "away_from_suggestion": 684,
+    "towards_suggestion": 94
+  }
+}
